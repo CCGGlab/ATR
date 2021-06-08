@@ -1,0 +1,28 @@
+channels:
+- conda-forge
+- bioconda
+dependencies:
+- r-base=4.0.3
+- r-essentials=4.0
+- bioconductor-deseq2=1.30.0
+- bioconductor-fgsea=1.16.0
+- bioconductor-rots=1.18.0
+- r-svglite=1.2
+- r-gplots=3.1 # heatmap2
+# - r-dqshiny # conda conflicts
+- r-shinyjs=2.0
+- r-shinydashboard=0.7
+- r-venndiagram=1.6.20
+- r-writexls=6.0.0
+- python=3.7 # To avoid python conflicts with hisat2 & htseq (goes to 2.8 by default, conda version related?)
+- hisat2=2.1.0
+- htseq=0.11.2
+- r-dt=0.16
+- r-cairo=1.5
+- bioconductor-scde=2.18
+- r-flexmix
+- r-igraph=1.2.6
+- r-shinycssloaders=1.0.0
+# Dependencies of CIBERSORT
+# - r-e1071=1.7_4
+# - bioconductor-preprocesscore=1.52.0
