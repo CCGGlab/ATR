@@ -19,3 +19,5 @@ install.packages("protr") # TO get protein sequence from uniprot (tried to deriv
 install.packages("survminer")
 
 BiocManager::install("DEGreport") # Geom_cor
+
+install.packages("ggseqlogo")

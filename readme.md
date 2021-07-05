@@ -28,7 +28,7 @@ RNA-Seq data ALK and ALKAL mice after 3d ATR inhibition with 50 nM BAY 1895344.
 
 - Raw RNA-Seq data have been deposited in Arrayexpress 
   - Cell lines: E-MTAB-10603
-  - Mice: E-MTAB-... (BAY treatment) & E-MTAB-9600 (Control samples)
+  - Mice: E-MTAB-10616 (BAY treatment) & E-MTAB-9600 (Control samples)
 - Processed data are available in *data/ATR_data.RData*. This file containes the following objects:
   - normalized_counts: DESeq2-normalized counts from cell line RNA-Seq data
   - res_diff_expr: DESeq2 output from cell line RNA-Seq data
@@ -75,6 +75,11 @@ source("scripts/manuscript_PP_hm.R")
 Network analysis
 ```{r}
 source("scripts/manuscript_PP_network.R")
+```
+
+Motif analysis
+```{r}
+source("scripts/manuscript_PP_motifs.R")
 ```
 
 ## RNA-Seq mice
