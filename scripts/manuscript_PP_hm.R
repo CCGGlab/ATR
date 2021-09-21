@@ -28,9 +28,9 @@ sites<- c(
   )
 
 # Get PP counts
-res_proc<- normalized_counts_PP[["4082"]]
-res_proc<- res_proc[rownames(res_proc)%in%sort(sites),c(9:15)]
-SQ_matrix<- SQ_sites[["4082"]]
+res_proc<- normalized_counts_PP[["BAR"]]
+res_proc<- res_proc[rownames(res_proc)%in%sort(sites),]
+SQ_matrix<- SQ_sites[["BAR"]]
 isSQ<- rownames(res_proc)%in%rownames(SQ_matrix[SQ_matrix$isSQ,])
 
 pdf("results/figs/PP_hm.pdf")

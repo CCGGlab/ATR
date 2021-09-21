@@ -9,13 +9,11 @@ library(grid)
 # Load data
 ###########
 
-# Select experiment & condition
-exp<- "4082"
-cond<- "Sync_BAY_DMSO"
-res_proc<- res_diff_expr_PP[[exp]][[cond]]  
+# Get data
+res_proc<- res_diff_expr_PP[["BAR"]]
 
 # SQ sites?
-res_SQ<- SQ_sites[[exp]]
+res_SQ<- SQ_sites[["BAR"]]
 
 # General description
 #####################
@@ -31,9 +29,6 @@ sites<- gsub(".*_","",rownames(res_proc))
 table(substr(sites,1,1))
 # S    T    Y 
 # 12776  1676    57 
-
-# How many unique peptides?
-# length(unique(prot$`Annotated Sequence`)) # 13,517
 
 # Volcano
 #########

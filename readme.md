@@ -13,14 +13,12 @@ RNA-Seq data cell lines after ATR inhibition with 50nM BAY 1895344
 
 Proteomics data cell lines after ATR inhibition with 50nM BAY 1895344 
 
-- CLB-GE: 0h (ctrl), 24h, 48h (Exp 3336 & 3337)
-- CLB-BAR: 0h (ctrl), 24h, 48h (Exp 3403)
-- CLB-BAR: 0h (ctrl), 1h, 3h, 6h, 24h (Exp 4060)
-- CLB-BAR: SYNCHRONIZED, 6h (DMSO), 6h (Treatment) (Exp 4082)
+- CLB-GE: 0h (ctrl), 24h, 48h
+- CLB-BAR: 0h (ctrl), 24h, 48h
 
 Phosphoproteomics data cell lines after ATR inhibition with 50nM BAY 1895344 
 
-- CLB-BAR: SYNCHRONIZED, 6h (DMSO), 6h (Treatment) (Exp 4082)
+- CLB-BAR: SYNCHRONIZED, 6h (DMSO), 6h (Treatment)
 
 RNA-Seq data ALK and ALKAL mice after 3d ATR inhibition with 50 nM BAY 1895344. 
 

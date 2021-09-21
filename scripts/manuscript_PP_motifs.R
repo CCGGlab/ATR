@@ -6,11 +6,9 @@ source("scripts/functions/ATR_functions.R")
 # Get sequences around PP sites
 ####################################
 
-# Select experiment & condition
-exp<- "4082"
-cond<- "Sync_BAY_DMSO"
-res_proc<- res_diff_expr_PP[[exp]][[cond]]  
-res_SQ<- SQ_sites[[exp]]
+# Select data
+res_proc<- res_diff_expr_PP[["BAR"]]
+res_SQ<- SQ_sites[["BAR"]]
 sites_DP<- get_DE(res_proc$logFC,res_proc$pvalue,rownames(res_proc),th_logFC=0.3,th_logP= -log10(0.05),curve=0.1)
 sites_down<- sites_DP$down
 sites_up<- sites_DP$up

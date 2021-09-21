@@ -18,9 +18,7 @@ RNA_df<- cbind(RNA_df[[1]],RNA_df[[2]],RNA_df[[3]],RNA_df[[4]])
 P_df<- NULL
 for(CL in c("BAR","GE")){
   for(t in c("24","48")){
-    if(CL=="GE") exp<- "3367"
-    if(CL=="BAR") exp<- "3403"
-    res_tmp<- as.data.frame(res_diff_expr_prot[[exp]][[t]])[,c(1,2,3)]
+    res_tmp<- as.data.frame(res_diff_expr_prot[[CL]][[t]])[,c(1,2,3)]
     colnames(res_tmp)<- paste(CL,t,colnames(res_tmp),sep="_")
     res_tmp$id<- rownames(res_tmp)
     if(is.null(P_df)) P_df<- res_tmp
@@ -33,8 +31,8 @@ P_df$id<- NULL
 # Phosphoprot
 ###############
 
-PP_df<- as.data.frame(res_diff_expr_PP[["4082"]][["Sync_BAY_DMSO"]])[,c(1,2,3)]
-colnames(PP_df)<- paste("GE_6",colnames(PP_df),sep="_")
+PP_df<- as.data.frame(res_diff_expr_PP[["BAR"]])[,c(1,2,3)]
+colnames(PP_df)<- paste("BAR_6",colnames(PP_df),sep="_")
 
 # RNA-Seq mice
 ################

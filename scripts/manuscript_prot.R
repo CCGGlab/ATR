@@ -9,27 +9,16 @@ library(grid)
 
 # N proteins?
 sapply(res_diff_expr_prot, function(x) sapply(x, function(y) nrow(y)))
-# $`3336`
-# 24   48 
-# 6635 6635 
-# 
-# $`3367`
-# 24   48 
-# 5189 5290 
-# 
-# $`3403`
-# 24   48 
-# 6792 6791 
+# BAR   GE
+# 24 6792 5189
+# 48 6791 5290
 
 # BAR & GE 24-48h
-# genes_to_label<- sort(c("CDKN1A","TOP2A","CCNA2","RRM2","MCM4","MKI67","MCM10","FANCI","CCNB1","MCM5","FOXM1","MCM6","E2F1","E2F2","E2F8","TP53INP1","BRIP1","FANCD2", "NOTCH1", "BRCA1", "BRCA2", "FAS"))
 genes_to_label<- sort(c("BRCA1", "BRCA2", "E2F1", "E2F2", "E2F8", "TOP2A", "MCM4", "MCM5", "MCM6", "MCM10", "MKI67", "CCNB1", "CCNB2", "CCNA2", "FOXM1", "BRIP1", "BARD1", "FANCD2", "FANCI", "FANCB", "CDKN1A","FAS", "TP53INP1", "GDF15", "NOTCH1"))
 genes_DE<- list()
 for(CL in c("BAR","GE")){
   for(t in c("24","48")){
-    if(CL=="BAR") exp<- "3403"
-    if(CL=="GE") exp<- "3367"
-    res_proc<- as.data.frame(res_diff_expr_prot[[exp]][[t]])
+    res_proc<- as.data.frame(res_diff_expr_prot[[CL]][[t]])
     p_tmp<- plot_volcano(DE_results = res_proc, gene = genes_to_label, labelAll = T, labelCol = "black", useHyperbolicTH = T,logFC_cu = 0.3,curve = 0.1, plotTH=F, isProt = T, p_cu = 0.05)
       p_tmp<- p_tmp +
         ggtitle(label = paste0("CLB-",CL,": ",t,"h")) +
@@ -90,9 +79,7 @@ length(intersect(genes_DE$BAR_48$down,genes_DE$GE_48$down)) # 18/291
 # BAR & GE 24-48h?
 for(CL in c("BAR","GE")){
   for(t in c("24","48")){
-    if(CL=="BAR") exp<- "3403"
-    if(CL=="GE") exp<- "3367"
-    res_proc<- as.data.frame(res_diff_expr_prot[[exp]][[t]])
+    res_proc<- as.data.frame(res_diff_expr_prot[[CL]][[t]])
     GSEA_res<- do_fGSEA(geneset_ls[["Ha_ls"]], get_GSEA_stat(res_proc, isProt = T))
     GSEA_res$isLabel<- NA
     GSEA_res$isLabel[GSEA_res$padj< 0.05]<- T

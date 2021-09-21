@@ -14,10 +14,8 @@ library(gplots)
 # Get PP data
 #############
 
-# Select experiment & condition
-exp<- "4082"
-cond<- "Sync_BAY_DMSO"
-res_proc_PP<- res_diff_expr_PP[[exp]][[cond]]  
+# Select data
+res_proc_PP<- res_diff_expr_PP[["BAR"]]
 
 # Get DP genes
 genes_DP_ls<- get_DE(res_proc_PP$logFC,res_proc_PP$pvalue,rownames(res_proc_PP),th_logFC=0.3,th_logP= -log10(0.05),curve=0.1)
@@ -72,7 +70,7 @@ for(i in 1:2){
   node_label[node_label%in%nodes_sites]<- NA # Don't label sites
   
   # Node border colors: SQ sites
-  PP_SQ<- rownames(SQ_sites[[exp]])[SQ_sites[[exp]][,"isSQ"]]
+  PP_SQ<- rownames(SQ_sites[["BAR"]])[SQ_sites[["BAR"]][,"isSQ"]]
   node_border_col<- rep("black",length(nodes))
   node_border_col[nodes%in%PP_SQ]<- "red"
   # node_border_col[nodes%in%nodes_genes]<- "black"
