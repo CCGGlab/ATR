@@ -14,10 +14,11 @@ install.packages("remotes")
 remotes::install_github("daqana/dqshiny")
 
 install.packages("UniprotR") # TO get protein sequence from uniprot (tried to derive SQ sites); not working (dependencies)
-install.packages("protr") # TO get protein sequence from uniprot (tried to derive SQ sites);
+install.packages("protr") 
 
 install.packages("survminer")
 
 BiocManager::install("DEGreport") # Geom_cor
+BiocManager::install("DEP") 
 
 install.packages("ggseqlogo")

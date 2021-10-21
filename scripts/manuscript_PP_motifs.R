@@ -9,7 +9,7 @@ source("scripts/functions/ATR_functions.R")
 # Select data
 res_proc<- res_diff_expr_PP[["BAR"]]
 res_SQ<- SQ_sites[["BAR"]]
-sites_DP<- get_DE(res_proc$logFC,res_proc$pvalue,rownames(res_proc),th_logFC=0.3,th_logP= -log10(0.05),curve=0.1)
+sites_DP<- get_DE(res_proc$logFC,res_proc$FDR,rownames(res_proc),th_logFC=0.3,th_logP= -log10(0.05),curve=0.1)
 sites_down<- sites_DP$down
 sites_up<- sites_DP$up
 

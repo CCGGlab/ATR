@@ -27,11 +27,13 @@ for(CL in c("BAR","GE")){
 }
 rownames(P_df)<- P_df$id
 P_df$id<- NULL
+P_df<- P_df[order(rownames(P_df)),]
 
 # Phosphoprot
 ###############
 
 PP_df<- as.data.frame(res_diff_expr_PP[["BAR"]])[,c(1,2,3)]
+PP_df<- PP_df[order(rownames(PP_df)),]
 colnames(PP_df)<- paste("BAR_6",colnames(PP_df),sep="_")
 
 # RNA-Seq mice

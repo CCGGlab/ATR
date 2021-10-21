@@ -6,7 +6,7 @@ dependencies:
 - r-essentials=4.0
 - bioconductor-deseq2=1.30.0
 - bioconductor-fgsea=1.16.0
-- bioconductor-rots=1.18.0
+- bioconductor-rots=1.18.0 # not used in final analysis
 - r-svglite=1.2
 - r-gplots=3.1 # heatmap2
 # - r-dqshiny # conda conflicts
@@ -23,6 +23,5 @@ dependencies:
 - r-flexmix
 - r-igraph=1.2.6
 - r-shinycssloaders=1.0.0
-# Dependencies of CIBERSORT
-# - r-e1071=1.7_4
-# - bioconductor-preprocesscore=1.52.0
+- r-ncdf4 
+

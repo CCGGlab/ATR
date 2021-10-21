@@ -10,8 +10,8 @@ library(grid)
 # N proteins?
 sapply(res_diff_expr_prot, function(x) sapply(x, function(y) nrow(y)))
 # BAR   GE
-# 24 6792 5189
-# 48 6791 5290
+# 24 6792 5908
+# 48 6792 5908
 
 # BAR & GE 24-48h
 genes_to_label<- sort(c("BRCA1", "BRCA2", "E2F1", "E2F2", "E2F8", "TOP2A", "MCM4", "MCM5", "MCM6", "MCM10", "MKI67", "CCNB1", "CCNB2", "CCNA2", "FOXM1", "BRIP1", "BARD1", "FANCD2", "FANCI", "FANCB", "CDKN1A","FAS", "TP53INP1", "GDF15", "NOTCH1"))
@@ -19,7 +19,9 @@ genes_DE<- list()
 for(CL in c("BAR","GE")){
   for(t in c("24","48")){
     res_proc<- as.data.frame(res_diff_expr_prot[[CL]][[t]])
-    p_tmp<- plot_volcano(DE_results = res_proc, gene = genes_to_label, labelAll = T, labelCol = "black", useHyperbolicTH = T,logFC_cu = 0.3,curve = 0.1, plotTH=F, isProt = T, p_cu = 0.05)
+    res_proc$dummy<- NA # Format for plot_volcano function,
+    # Plot unadjusted P for visualization purposes in volcano
+    p_tmp<- plot_volcano(DE_results = res_proc, gene = genes_to_label, labelAll = T, labelCol = "black", useHyperbolicTH = T,logFC_cu = 0.3,curve = 0.1, plotTH=F, isProt = T, p_cu = 0.05, plot_nominal_p = T)
       p_tmp<- p_tmp +
         ggtitle(label = paste0("CLB-",CL,": ",t,"h")) +
         theme(
@@ -33,12 +35,12 @@ for(CL in c("BAR","GE")){
           axis.title = element_text(size=7)
         ) +
         scale_x_continuous(name = "log2(Fold Change)", limits = c(-3,3)) +
-        scale_y_continuous(name = "-log10(Padj)")
+        scale_y_continuous(name = "-log10(P)")
       
       assign(paste("p",CL,t,sep="_"),p_tmp)
       # n DE?
-      res_proc<- na.omit(res_proc)
-      genes_DE[[paste(CL,t,sep="_")]]<- get_DE(logFC = res_proc$logFC, P = res_proc$pvalue, genes = rownames(res_proc), th_logFC = 0.5, th_logP = 0.05, curve = 0.1)
+      # res_proc<- na.omit(res_proc)
+      genes_DE[[paste(CL,t,sep="_")]]<- get_DE(logFC = res_proc$logFC, P = res_proc$FDR, genes = rownames(res_proc), th_logFC = 0.3, th_logP = -log10(0.05), curve = 0.1)
   }
 }
 
@@ -51,27 +53,15 @@ n_DE_GE<- sapply(genes_DE[3:4], function(x) sapply(x, length))
 
 n_DE_BAR
 # BAR_24 BAR_48
-# up       12     33
-# down     14     58
-# DE       26     91
+# up       13     48
+# down     5     96
+# DE       18     144
 
 n_DE_GE
 # GE_24 GE_48
-# up      70   259
-# down   219   291
-# DE     289   550
-
-g_E2F<- intersect(genes_DE$GE_48$down,geneset_ls$Ha_ls$HALLMARK_E2F_TARGETS)
-g_G2M<- intersect(genes_DE$GE_48$down,geneset_ls$Ha_ls$HALLMARK_G2M_CHECKPOINT)
-g_TP53<- intersect(genes_DE$GE_48$up,geneset_ls$Ha_ls$HALLMARK_P53_PATHWAY)
-g_MTORC1<- intersect(genes_DE$GE_48$down,geneset_ls$Ha_ls$HALLMARK_MTORC1_SIGNALING)
-
-length(intersect(genes_DE$BAR_48$down,genes_DE$BAR_24$down)) # 13/58
-length(intersect(genes_DE$GE_48$down,genes_DE$GE_24$down)) # 92/291
-length(intersect(genes_DE$BAR_48$up,genes_DE$BAR_24$up)) # 7/33
-length(intersect(genes_DE$GE_48$up,genes_DE$GE_24$up)) # 35/259
-length(intersect(genes_DE$BAR_48$up,genes_DE$GE_48$up)) # 7/259
-length(intersect(genes_DE$BAR_48$down,genes_DE$GE_48$down)) # 18/291
+# up      0   25
+# down   0   105
+# DE     0   130
 
 # GSEA 48h --> E2F & G2M + RS
 ###############################
@@ -80,6 +70,7 @@ length(intersect(genes_DE$BAR_48$down,genes_DE$GE_48$down)) # 18/291
 for(CL in c("BAR","GE")){
   for(t in c("24","48")){
     res_proc<- as.data.frame(res_diff_expr_prot[[CL]][[t]])
+    res_proc$stat<- -1 * res_proc$logFC # Parameter for ranking (-1 because of previous function implementation)
     GSEA_res<- do_fGSEA(geneset_ls[["Ha_ls"]], get_GSEA_stat(res_proc, isProt = T))
     GSEA_res$isLabel<- NA
     GSEA_res$isLabel[GSEA_res$padj< 0.05]<- T

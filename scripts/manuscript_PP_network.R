@@ -18,7 +18,7 @@ library(gplots)
 res_proc_PP<- res_diff_expr_PP[["BAR"]]
 
 # Get DP genes
-genes_DP_ls<- get_DE(res_proc_PP$logFC,res_proc_PP$pvalue,rownames(res_proc_PP),th_logFC=0.3,th_logP= -log10(0.05),curve=0.1)
+genes_DP_ls<- get_DE(res_proc_PP$logFC,res_proc_PP$FDR,rownames(res_proc_PP),th_logFC=0.3,th_logP= -log10(0.05),curve=0.1)
 sites_DP<- genes_DP_ls$DE
 genes_DP<- unique(gsub("_.*","",sites_DP))
 genes_DP_up<- unique(gsub("_.*","",genes_DP_ls$up))
@@ -34,12 +34,7 @@ for(i in 1:2){
   
   # Select genes for network
   genes<- genes_DP_down
-  # genes<- c(genes_DP_down,"BRCA1","FANCI","EXO1","WRN","BLM","ATRX","XRCC1")
-  # if(i==2){
-  #   genes<- setdiff(genes,c("EIF3B","EIF4B","CASC3","SRRM2")) # Seperate clusters
-  #   genes<- setdiff(genes,c("SMARCA5","GSK3B","CEBPB","MED1","TSC2")) # Focus on hub only
-  # } 
-  
+
   # Create graph
   ppi_db_sel<- ppi_db[ppi_db$protein1%in%genes&ppi_db$protein2%in%genes,]
   if(i==2){
@@ -99,20 +94,29 @@ dev.off()
 save(g_ppi, node_border_col, node_label, node_shape, node_col, file="results/data/PP_network.RData")
 
 # tkplot locally
+# tkplot(
+#   g_ppi,
+#   vertex.frame.color=node_border_col,
+#   vertex.color=node_col,
+#   vertex.label.color="black",
+#   vertex.label.font=3,
+#   vertex.size=(5+5*log2(degree(g_ppi,mode = "in"))),
+#   layout=layout.kamada.kawai
+# )
 
 # Some data
 #############
 
 # N nodes?
-length(nodes) #41
-length(unique(gsub("_.*","",nodes))) #17
+length(nodes) #28
+length(unique(gsub("_.*","",nodes))) #11
 
 # Knij genes?
 knij <- readxl::read_excel("downloads/pub/knijnenburg_2018/NIHMS962902-supplement-2.xlsx", skip = 3)
 knij_genes<- knij$`Gene Symbol`
 intersect(nodes, knij_genes)
-# "TOPBP1"  "FANCD2"  "WRN"     "ATR"     "RPA2"    "DCLRE1A" "RBBP8"   "RECQL4" 
-setdiff(nodes, knij_genes) # Only DTL & SLBP not!
+# [1] "UNG"     "TOPBP1"  "FANCD2"  "ATR"     "DCLRE1A" "EXO1"    "RPA2"    "RBBP8"  
+setdiff(nodes, knij_genes) # Only CASC3, SLBP and SRRM2 not!
 
 # Check sites
 res_proc_PP[nodes,]

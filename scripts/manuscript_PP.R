@@ -19,57 +19,59 @@ res_SQ<- SQ_sites[["BAR"]]
 #####################
 
 # Unique sites
-length(unique(rownames(res_proc))) # 14509
+length(unique(rownames(res_proc))) # 14528
 
 # Unique proteins
-length(unique(gsub("_.*","",rownames(res_proc)))) # 4085
+length(unique(gsub("_.*","",rownames(res_proc)))) # 4087
 
 # Type of sites
 sites<- gsub(".*_","",rownames(res_proc))
 table(substr(sites,1,1))
 # S    T    Y 
-# 12776  1676    57 
+# 12792  1679    57 
 
 # Volcano
 #########
 
 # Get DE
-sites_DP<- get_DE(res_proc$logFC,res_proc$pvalue,rownames(res_proc),th_logFC=0.3,th_logP= -log10(0.05),curve=0.1)
-length(sites_DP$DE) # 580 sites
-length(unique(gsub("_.*","",sites_DP$DE))) # 399 proteins
-length(sites_DP$up) # 528
-length(unique(gsub("_.*","",sites_DP$up))) # 360 proteins
-length(sites_DP$down) # 52
-length(unique(gsub("_.*","",sites_DP$down))) # 43 proteins
+# sites_DP<- get_DE(res_proc$logFC,res_proc$pvalue,rownames(res_proc),th_logFC=0.3,th_logP= -log10(0.05),curve=0.1)
+sites_DP<- get_DE(res_proc$logFC,res_proc$FDR,rownames(res_proc),th_logFC=0.3,th_logP= -log10(0.05),curve=0.1)
+length(sites_DP$DE) # 674 sites
+length(unique(gsub("_.*","",sites_DP$DE))) # 444 proteins
+length(sites_DP$up) # 632
+length(unique(gsub("_.*","",sites_DP$up))) # 417 proteins
+length(sites_DP$down) # 42
+length(unique(gsub("_.*","",sites_DP$down))) # 31 proteins
 
 # Sites in discussion and/or labelled
 genes_SQ_down<- intersect(rownames(res_SQ)[res_SQ$isSQ], sites_DP$down)
-genes_sel<- unique(c(genes_SQ_down, "ATR_S435","ATR_T1989","ATM_S2996","FANCD2_T716", "E2F3_S166", "E2F3_S172", "SLBP_S110", "TOPBP1_S888", "MCM3_S535", "TP53BP1_S1104", "FOXM1_S717", "FOXM1_S730", "DCK_S74", "LIG1_S91"))
+genes_sel<- unique(c(genes_SQ_down, "ATR_S435","ATR_T1989","ATM_S2996","FANCD2_T716", "E2F3_S166", "E2F3_S172", "SLBP_S110", "TOPBP1_S888", "MCM3_S535", "TP53BP1_S1104", "FOXM1_S717", "FOXM1_S730", "DCK_S74"))
 res_proc[sort(genes_sel),]
 
-# logFC       pvalue        FDR           d
-# AEBP2_S167    -0.917154444 0.0001746158 0.00000000  10.8162042
-# ATM_S2996      1.021270303 0.0076208216 0.07763975  -3.8931618
-# ATR_S435      -0.425826571 0.0007575298 0.01570681   7.4632690
-# ATR_T1989     -1.048618338 0.0041828865 0.05010438   4.5549616
-# BCLAF1_S259   -0.412339298 0.0048855193 0.05566219   4.3792193
-# CASC3_S10     -0.333837614 0.0040308774 0.05010438   4.5965098
-# DCK_S74       -0.516238440 0.0032819629 0.04400978   4.8874125
-# E2F3_S166     -0.470451951 0.0001458405 0.00000000  11.5564346
-# E2F3_S172     -0.470451951 0.0001458405 0.00000000  11.5564346
-# FANCD2_T716   -1.230070355 0.0035768144 0.04895105   4.7545393
-# FOXM1_S717     0.445993844 0.0135294989 0.12183908  -3.3308007
-# FOXM1_S730     0.445993844 0.0135294989 0.12183908  -3.3308007
-# LIG1_S91      -0.005602599 0.9356539734 0.99875450   0.1169554
-# MCM3_S535      2.249209128 0.0008015714 0.01762115  -7.3690540
-# RECQL4_S27    -0.541334811 0.0289177752 0.21389539   2.6780122
-# RPA2_S174     -0.700078082 0.0079621614 0.08153846   3.8478629
-# SLBP_S110     -0.622422564 0.0048748363 0.05566219   4.3821897
-# TOPBP1_S888   -0.372125921 0.0069176718 0.07491857   3.9983971
-# TP53BP1_S1104  0.955042675 0.0000381832 0.00000000 -18.1053553
-# UTP14A_S445   -0.583256455 0.0005418016 0.01092896   8.1333318
+#               logFC       pvalue      FDR
+# AEBP2_S167    -0.9170 7.757042e-06 2.21e-14
+# ATM_S2996      1.3000 1.178568e-07 2.21e-14
+# ATR_S435      -0.4530 4.223404e-04 2.67e-05
+# ATR_T1989     -1.2400 3.368840e-07 2.21e-14
+# BCLAF1_S259   -0.4120 2.848487e-03 6.48e-03
+# CASC3_S10     -0.3340 3.156317e-03 8.10e-03
+# DCK_S74       -0.5160 8.761719e-04 3.07e-04
+# E2F3_S166     -0.4650 1.994566e-04 1.31e-06
+# E2F3_S172     -0.4650 1.994566e-04 1.31e-06
+# FANCD2_T716   -1.4300 3.041732e-07 2.21e-14
+# FOXM1_S717     0.4460 5.483129e-03 2.41e-02
+# FOXM1_S730     0.4460 5.483129e-03 2.41e-02
+# MCM3_S535      2.2500 1.163676e-05 2.21e-14
+# POP1_S367     -1.1600 8.507170e-07 2.21e-14
+# RPA2_S174     -0.8520 3.037516e-05 2.04e-11
+# SLBP_S110     -0.5350 6.659398e-04 1.31e-04
+# TOPBP1_S888   -0.3720 4.263389e-03 1.51e-02
+# TP53BP1_S1104  1.0000 7.976794e-07 2.21e-14
+# UTP14A_S445   -0.5830 1.928876e-04 1.13e-06
 
-p_volc<- plot_volcano(DE_results = res_proc, gene=genes_sel, isProt=T, useHyperbolicTH = T, p_cu = 0.05, logFC_cu = 0.3, curve = 0.1, labelAll = T, labelCol="black", plotTH = F)
+res_proc$dummy<- NA # Format for plot_volcano function,
+# Plot unadjusted P for visualization purposes in volcano
+p_volc<- plot_volcano(DE_results = res_proc, gene=genes_sel, isProt=T, useHyperbolicTH = T, p_cu = 0.05, logFC_cu = 0.3, curve = 0.1, labelAll = T, labelCol="black", plotTH = F, plot_nominal_p = T)
 p_volc<- p_volc +
   theme(
     plot.title = element_text(hjust = 0.5, size=8), 
@@ -87,13 +89,13 @@ p_volc<- p_volc +
 # Label ATM/ATR in red
 idx_sel<- grep("ATR_|ATM_",rownames(res_proc))
 df_sel<- cbind(res_proc[idx_sel,],gene_id=rownames(res_proc[idx_sel,]))
-colnames(df_sel)[1]<- "log2FoldChange"
+colnames(df_sel)[c(1,3)]<- c("log2FoldChange","padj")
 p_volc<- p_volc + geom_point(data=df_sel, colour="red", size=2) # this adds a red point
 
 # Label diff PP SQ sites as well?
 idx_sel<- which(rownames(res_proc)%in%intersect(rownames(res_SQ)[res_SQ$isSQ], sites_DP$DE))
 df_sel<- cbind(res_proc[idx_sel,],gene_id=rownames(res_proc[idx_sel,]))
-colnames(df_sel)[1]<- "log2FoldChange"
+colnames(df_sel)[c(1,3)]<- c("log2FoldChange","padj")
 p_volc<- p_volc + geom_point(data=df_sel, colour="red", size=3, shape=21) # this adds a red point
 
 # GSEA
@@ -135,7 +137,7 @@ GSEA_df<- data.frame(
 p_GSEA<- ggplot(data=GSEA_df, aes(y=logq, x=pw, fill=cond)) +
   # geom_bar(stat="identity", fill="blue") +
   geom_bar(stat="identity", position = position_dodge()) +
-  coord_flip(ylim=c(0, 5)) + 
+  coord_flip(ylim=c(0, 6)) + 
   # ylim(0,5) + # Don't do this, bars get removed!, previous option
   xlab("") +
   ylab("-log10(Padj)") +
@@ -156,17 +158,17 @@ p_GSEA<- ggplot(data=GSEA_df, aes(y=logq, x=pw, fill=cond)) +
 knij <- readxl::read_excel("downloads/pub/knijnenburg_2018/NIHMS962902-supplement-2.xlsx", skip = 3)
 knij_genes<- knij$`Gene Symbol`
 
-intersect(knij_genes, genes_down) # 9/43 = 20.9%
-# [1] "RPA2"    "ATR"     "DCLRE1A" "FANCD2"  "RBBP8"   "RECQL4"  "TOPBP1"  "UNG"     "WRN"    length(genes_sel) # 43
+intersect(knij_genes, genes_down) # 8/31 = 25.8%
+# [1] "EXO1"    "RPA2"    "ATR"     "DCLRE1A" "FANCD2"  "RBBP8"   "TOPBP1"  "UNG"    
 isDo<- genes_all%in%genes_down
 isKnij<- genes_all%in%knij_genes
 f_t<- table(isDo, isKnij)
 f_prop<- prop.table(f_t,1)[,"TRUE"]
 f_prop
 # FALSE       TRUE 
-# 0.03092528 0.20930233 
-f_prop["TRUE"]/f_prop["FALSE"] # 6.768
-fisher.test(f_t) # 7.35e-06; OR=8.28
+# 0.03106509 0.25806452 
+f_prop["TRUE"]/f_prop["FALSE"] # 8.30722
+fisher.test(f_t) # 4.52e-06; OR=10.83
 
 # Enrichment SQ after ATRi?
 ############################
@@ -179,9 +181,9 @@ DQ_df<- data.frame(isDP=PP_all%in%sites_DP$DE, isDown=PP_all%in%sites_DP$down, i
 DQ_DP_t<- tapply(DQ_df$isSQ,DQ_df$isDP,"mean")
 DQ_DP_t
 # FALSE       TRUE 
-# 0.03273745 0.10172414 
+# 0.03298686 0.08753709 
 DQ_DP_t["TRUE"]/DQ_DP_t["FALSE"]
-# 3.11
+# 2.654
 
 # Pie charts
 for(i in 1:3){
@@ -201,9 +203,9 @@ for(i in 1:3){
   # p value?
   ft<- fisher.test(DQ_t)
   cat(i, " ", ft$p.value,"\n")
-  # 1   0.002283675 
-  # 2   2.225388e-11 
-  # 3   2.199581e-13 
+  # 1   0.0006271472 
+  # 2   1.51693e-08 
+  # 3   1.3039e-10 
   
   # Numbers
   n_DP<- data["TRUE","n"]
