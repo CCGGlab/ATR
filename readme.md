@@ -31,9 +31,9 @@ RNA-Seq data ALK and ALKAL mice after 3d ATR inhibition with 50 nM BAY 1895344.
   - normalized_counts: DESeq2-normalized counts from cell line RNA-Seq data
   - res_diff_expr: DESeq2 output from cell line RNA-Seq data
   - normalized_counts_prot: Normalized counts from cell line proteomics data
-  - res_diff_expr_prot: ROTS output from cell line proteomics data
+  - res_diff_expr_prot: DEP output from cell line proteomics data
   - normalized_counts_PP: Normalized counts from cell line phosphoproteomics data
-  - res_diff_expr_PP: ROTS output from cell line phosphoproteomics data
+  - res_diff_expr_PP: DEP output from cell line phosphoproteomics data
   - sample_info: sample information cell line RNA-Seq data
   - sample_info_prot: sample information cell line (phospho-)proteomics data
   - normalized_counts_mice: DESeq2-normalized counts from mice RNA-Seq data
@@ -49,44 +49,44 @@ RNA-Seq data ALK and ALKAL mice after 3d ATR inhibition with 50 nM BAY 1895344.
 The main analysis, as reported in the manuscript
 
 ## RNA-Seq cell lines
-```{r}
+```r
 source("scripts/manuscript_RNA.R")
 ```
 
 ## Proteomics cell lines
-```{r}
+```r
 source("scripts/manuscript_prot.R")
 ```
 
 ## PP cell lines
 
 Basic analysis: volcano plot, ST/Q sites, GSEA (+ table)
-```{r}
+```r
 source("scripts/manuscript_PP.R")
 ```
 
 Heatmap with main results
-```{r}
+```r
 source("scripts/manuscript_PP_hm.R")
 ```
 
 Network analysis
-```{r}
+```r
 source("scripts/manuscript_PP_network.R")
 ```
 
 Motif analysis
-```{r}
+```r
 source("scripts/manuscript_PP_motifs.R")
 ```
 
 ## RNA-Seq mice
-```{r}
+```r
 source("scripts/manuscript_mice.R")
 ```
 
 ## Summary table
-```{r}
+```r
 source("scripts/manuscript_summary.R")
 ```
 
